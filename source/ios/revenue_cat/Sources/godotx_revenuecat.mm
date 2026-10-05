@@ -89,12 +89,7 @@ void GodotxRevenueCat::initialize(String api_key, String user_id, bool debug) {
     NSString *api = @(api_key.utf8().get_data());
     NSString *uid = user_id.is_empty() ? nil : @(user_id.utf8().get_data());
     
-    // Reset before the delegate is attached: RCPurchases delivers its cached
-    // CustomerInfo to a newly assigned delegate synchronously (when already on
-    // the main thread), so clearing afterwards would discard that delivery
-    // and has_entitlement() would report no entitlement until the next
-    // update, even though the emitted customer_info_changed reports active
-    // entitlements.
+    // Reset before attaching the delegate: RCPurchases delivers its cached CustomerInfo to a new delegate synchronously, so clearing afterwards would discard it.
     currentCustomerInfo = nullptr;
     
     [RCPurchases configureWithAPIKey:api appUserID:uid];
