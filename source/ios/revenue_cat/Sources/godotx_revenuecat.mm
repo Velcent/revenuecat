@@ -89,6 +89,9 @@ void GodotxRevenueCat::initialize(String api_key, String user_id, bool debug) {
     NSString *api = @(api_key.utf8().get_data());
     NSString *uid = user_id.is_empty() ? nil : @(user_id.utf8().get_data());
     
+    // Reset before attaching the delegate: RCPurchases delivers its cached CustomerInfo to a new delegate synchronously, so clearing afterwards would discard it.
+    currentCustomerInfo = nullptr;
+    
     [RCPurchases configureWithAPIKey:api appUserID:uid];
     
     if (!s_delegate) {
@@ -96,7 +99,6 @@ void GodotxRevenueCat::initialize(String api_key, String user_id, bool debug) {
     }
     
     [RCPurchases sharedPurchases].delegate = s_delegate;
-    currentCustomerInfo = nullptr;
 }
 
 void GodotxRevenueCat::get_customer_info() {
