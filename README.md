@@ -287,18 +287,14 @@ func _on_customer_info_changed(data: Dictionary):
         print("Premium is not active")
 ```
 
-`customer_info` (the reply to `get_customer_info()`) and `customer_info_changed` (emitted whenever
-RevenueCat updates the entitlements: a renewal, an expiry, a restore, or a purchase made on another
-device) carry the same keys and the same Godot types on iOS and Android:
+`customer_info` (the reply to `get_customer_info()`) and `customer_info_changed` (emitted whenever RevenueCat updates the entitlements: a renewal, an expiry, a restore, or a purchase made on another device) carry the same keys and the same Godot types on iOS and Android:
 
 | Key | Type | Notes |
 |-----|------|-------|
 | `active_entitlements` | `int` | Count of active entitlements, `0` if there are none |
 | `active_ids` | `PackedStringArray` | The active entitlements' identifiers, `[]` if there are none |
 
-Use `active_ids` to gate on a specific entitlement, and `active_entitlements` only when a count is
-all you need. When a `get_customer_info()` fetch fails, `customer_info` carries an `error` key with
-the SDK's own message.
+Use `active_ids` to gate on a specific entitlement, and `active_entitlements` only when a count is all you need. When a `get_customer_info()` fetch fails, `customer_info` carries an `error` key with the SDK's own message.
 
 ### Login & Logout
 
@@ -307,7 +303,7 @@ revenuecat.login("user_123")
 revenuecat.logout()
 ```
 
-### Subscriber Attributes
+### Customer Attributes
 
 ```gdscript
 revenuecat.set_attributes({
@@ -316,8 +312,7 @@ revenuecat.set_attributes({
 })
 ```
 
-RevenueCat subscriber attributes are string keys with string values, so only entries whose key and
-value are both a `String` are forwarded. Any other entry is ignored, on iOS and Android alike.
+RevenueCat customer attributes are string keys with string values, so only entries whose key and value are both a `String` are forwarded. Any other entry is ignored, on iOS and Android alike.
 
 ## Advanced Configuration
 
@@ -400,7 +395,7 @@ revenuecat/
 | `present_paywall(offering)` | Shows native UI |
 | `check_entitlement(id)` | Checks entitlement |
 | `restore_purchases` | Retrieves purchases |
-| `set_attributes(attributes)` | Sets subscriber attributes (string keys and string values only) |
+| `set_attributes(attributes)` | Sets customer attributes (string keys and string values only) |
 
 ### Signals
 

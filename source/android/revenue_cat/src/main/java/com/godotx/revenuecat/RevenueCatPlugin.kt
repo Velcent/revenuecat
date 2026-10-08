@@ -77,8 +77,7 @@ class RevenueCatPlugin(godot: Godot) : GodotPlugin(godot) {
     private fun customerInfoDict(info: CustomerInfo): Dictionary {
         val d = Dictionary()
         d["active_entitlements"] = info.entitlements.active.size
-        // Must stay String[]: Godot's JNI conversion has no case for a java.util.List, which
-        // would reach GDScript as an opaque JavaObject instead of a PackedStringArray.
+        // Must stay String[]: Godot's JNI bridge converts it to PackedStringArray, a List would reach GDScript as an opaque JavaObject.
         d["active_ids"] = info.entitlements.active.keys.toTypedArray()
         return d
     }
